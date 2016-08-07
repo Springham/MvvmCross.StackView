@@ -5,6 +5,11 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmCross.StackView", "MvvmCross.StackView.csproj", "{B20DBA14-6AB2-4F4F-85F3-1E245949B465}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{CBD057E7-E819-4166-8082-D379AD9AD307}"
+	ProjectSection(SolutionItems) = preProject
+		MvvmCross.StackView.nuspec = MvvmCross.StackView.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

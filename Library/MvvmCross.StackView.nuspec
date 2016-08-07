@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Springham.MvvmCross.StackView</id>
+    <version>1.0.0.0</version>
+    <title>MvvmCross StackView</title>
+    <authors>Andrew Springham</authors>
+    <owners>Andrew Springham</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>UIStackView for use with MvvmCross</description>
+  </metadata>
+  <files>
+    <file src="bin\Release\MvvmCross.StackView.dll" target="lib" />
+    <file src="bin\Release\MvvmCross.StackView.pdb" target="lib" />
+  </files>
+</package>
