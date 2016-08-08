@@ -20,7 +20,9 @@ To provide a custom or wrapper view override GetView and return your view.
 
 Hooks are available to perform custom actions before/after adding and removing of views. These can be used to perform animations for example.
 
-`protected virtual void OnBeforeAdd(UIView view){}`
-`protected virtual void OnAfterAdd(UIView view){}`
-`protected virtual void OnBeforeRemove(UIView view){}`
-`protected virtual void OnAfterRemove(UIView view){}`
+```
+protected virtual void OnBeforeAdd(UIView view){}
+protected virtual void OnAfterAdd(UIView view){}
+protected virtual void OnBeforeRemove(UIView view){}
+protected virtual void OnAfterRemove(UIView view){}
+```
