@@ -18,13 +18,13 @@ namespace MvvmCross.StackView
 
         public MvxStackView()
         {
-            Intialise();
+            Initialise();
         }
 
         public MvxStackView(IntPtr handler)
             : base(handler)
         {
-            Intialise();
+            Initialise();
         }
 
         [MvxSetToNullAfterBinding]
@@ -51,7 +51,7 @@ namespace MvvmCross.StackView
             }
         }
 
-        private void Intialise()
+        private void Initialise()
         {
             _viewModelViewLinks = new Dictionary<MvxViewModel, UIView>();
         }
@@ -97,6 +97,7 @@ namespace MvvmCross.StackView
         private void InitialiseContainer()
         {
             var index = 0;
+            _viewModelViewLinks.Clear();
             foreach (var viewModel in ItemsSource)
             {
                 AddViewModel(viewModel, index);
@@ -140,6 +141,7 @@ namespace MvvmCross.StackView
 
             RemoveArrangedSubview(view);
             view.RemoveFromSuperview();
+            _viewModelViewLinks.Remove(viewModel);
 
             OnAfterRemove(view);
         }
@@ -155,8 +157,7 @@ namespace MvvmCross.StackView
 
             return GetView(viewController);
         }
-
-
+        
         protected virtual UIView GetView(UIViewController controller)
         {
             return controller.View;
