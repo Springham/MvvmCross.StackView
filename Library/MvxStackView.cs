@@ -107,43 +107,49 @@ namespace MvvmCross.StackView
 
         private void AddViewModel(MvxViewModel viewModel, int index)
         {
-            if (index == -1)
+            InvokeOnMainThread(() =>
             {
-                index = 0;
-            }
+                if (index == -1)
+                {
+                    index = 0;
+                }
 
-            var view = GetView(viewModel);
+                var view = GetView(viewModel);
 
-            if (view == null)
-            {
-                return;
-            }
+                if (view == null)
+                {
+                    return;
+                }
 
-            _viewModelViewLinks.Add(viewModel, view);
+                _viewModelViewLinks.Add(viewModel, view);
 
-            OnBeforeAdd(view);
+                OnBeforeAdd(view);
 
-            InsertArrangedSubview(view, (nuint) index);
+                InsertArrangedSubview(view, (nuint) index);
 
-            OnAfterAdd(view);
+                OnAfterAdd(view);
+            });
         }
 
         private void RemoveViewModel(MvxViewModel viewModel)
         {
-            if (!_viewModelViewLinks.ContainsKey(viewModel))
+            InvokeOnMainThread(() =>
             {
-                return;
-            }
+                if (!_viewModelViewLinks.ContainsKey(viewModel))
+                {
+                    return;
+                }
 
-            var view = _viewModelViewLinks[viewModel];
+                var view = _viewModelViewLinks[viewModel];
 
-            OnBeforeRemove(view);
+                OnBeforeRemove(view);
 
-            RemoveArrangedSubview(view);
-            view.RemoveFromSuperview();
-            _viewModelViewLinks.Remove(viewModel);
+                RemoveArrangedSubview(view);
+                view.RemoveFromSuperview();
+                _viewModelViewLinks.Remove(viewModel);
 
-            OnAfterRemove(view);
+                OnAfterRemove(view);
+            });
         }
 
         private UIView GetView(MvxViewModel viewModel)
@@ -157,7 +163,7 @@ namespace MvvmCross.StackView
 
             return GetView(viewController);
         }
-        
+
         protected virtual UIView GetView(UIViewController controller)
         {
             return controller.View;
