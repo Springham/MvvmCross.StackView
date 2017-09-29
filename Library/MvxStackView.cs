@@ -152,7 +152,7 @@ namespace MvvmCross.StackView
             });
         }
 
-        private UIView GetView(MvxViewModel viewModel)
+        protected virtual UIView GetView(MvxViewModel viewModel)
         {
             var viewController = Mvx.Resolve<IMvxIosViewCreator>().CreateView(viewModel) as UIViewController;
 
