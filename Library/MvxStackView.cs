@@ -114,7 +114,7 @@ namespace MvvmCross.StackView
                     index = 0;
                 }
 
-                var view = GetView(viewModel);
+                var view = GetView(viewModel, index);
 
                 if (view == null)
                 {
@@ -152,7 +152,7 @@ namespace MvvmCross.StackView
             });
         }
 
-        protected virtual UIView GetView(MvxViewModel viewModel)
+        protected virtual UIView GetView(MvxViewModel viewModel, int index)
         {
             var viewController = Mvx.Resolve<IMvxIosViewCreator>().CreateView(viewModel) as UIViewController;
 
@@ -161,10 +161,10 @@ namespace MvvmCross.StackView
                 return null;
             }
 
-            return GetView(viewController);
+            return GetView(viewController, int index);
         }
 
-        protected virtual UIView GetView(UIViewController controller)
+        protected virtual UIView GetView(UIViewController controller, int index)
         {
             return controller.View;
         }
