@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using MvvmCross.Binding.Attributes;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Views;
@@ -30,7 +31,7 @@ namespace MvvmCross.StackView
         [MvxSetToNullAfterBinding]
         public virtual IEnumerable<MvxViewModel> ItemsSource
         {
-            get { return _itemsSource; }
+            get => _itemsSource;
             set
             {
                 if (ReferenceEquals(_itemsSource, value))
@@ -51,11 +52,6 @@ namespace MvvmCross.StackView
             }
         }
 
-        private void Initialise()
-        {
-            _viewModelViewLinks = new Dictionary<MvxViewModel, UIView>();
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -70,8 +66,58 @@ namespace MvvmCross.StackView
             base.Dispose(disposing);
         }
 
+        protected virtual UIView GetView(MvxViewModel viewModel, int index)
+        {
+            var viewController = Mvx.Resolve<IMvxIosViewCreator>().CreateView(viewModel) as UIViewController;
+
+            if (viewController == null)
+            {
+                return null;
+            }
+
+            return GetView(viewController, index);
+        }
+
+        protected virtual UIView GetView(UIViewController controller, int index)
+        {
+            return controller.View;
+        }
+
+        protected virtual void OnBeforeAdd(UIView view)
+        {
+        }
+
+        protected virtual void OnAfterAdd(UIView view)
+        {
+        }
+
+        protected virtual void OnBeforeRemove(UIView view)
+        {
+        }
+
+        protected virtual void OnAfterRemove(UIView view)
+        {
+        }
+
+        private void Initialise()
+        {
+            _viewModelViewLinks = new Dictionary<MvxViewModel, UIView>();
+        }
+
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
+            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Reset)
+            {
+                var viewModels = _viewModelViewLinks.Select(viewModelLink => viewModelLink.Key).ToList();
+
+                foreach (var viewModel in viewModels)
+                {
+                    RemoveViewModel(viewModel);
+                }
+
+                return;
+            }
+
             var newItems = notifyCollectionChangedEventArgs?.NewItems;
             if (newItems != null)
             {
@@ -125,7 +171,7 @@ namespace MvvmCross.StackView
 
                 OnBeforeAdd(view);
 
-                InsertArrangedSubview(view, (nuint) index);
+                InsertArrangedSubview(view, (nuint)index);
 
                 OnAfterAdd(view);
             });
@@ -150,39 +196,6 @@ namespace MvvmCross.StackView
 
                 OnAfterRemove(view);
             });
-        }
-
-        protected virtual UIView GetView(MvxViewModel viewModel, int index)
-        {
-            var viewController = Mvx.Resolve<IMvxIosViewCreator>().CreateView(viewModel) as UIViewController;
-
-            if (viewController == null)
-            {
-                return null;
-            }
-
-            return GetView(viewController, index);
-        }
-
-        protected virtual UIView GetView(UIViewController controller, int index)
-        {
-            return controller.View;
-        }
-
-        protected virtual void OnBeforeAdd(UIView view)
-        {
-        }
-
-        protected virtual void OnAfterAdd(UIView view)
-        {
-        }
-
-        protected virtual void OnBeforeRemove(UIView view)
-        {
-        }
-
-        protected virtual void OnAfterRemove(UIView view)
-        {
         }
     }
 }
