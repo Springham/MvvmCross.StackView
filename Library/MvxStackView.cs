@@ -161,7 +161,7 @@ namespace MvvmCross.StackView
                 return null;
             }
 
-            return GetView(viewController, int index);
+            return GetView(viewController, index);
         }
 
         protected virtual UIView GetView(UIViewController controller, int index)
