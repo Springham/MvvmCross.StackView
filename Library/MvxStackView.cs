@@ -41,9 +41,7 @@ namespace MvvmCross.StackView
 
                 _itemsSource = value;
 
-                var collectionChanged = _itemsSource as INotifyCollectionChanged;
-
-                if (collectionChanged != null)
+                if (_itemsSource is INotifyCollectionChanged collectionChanged)
                 {
                     _subscription = collectionChanged.WeakSubscribe(OnCollectionChanged);
                 }
@@ -68,9 +66,7 @@ namespace MvvmCross.StackView
 
         protected virtual UIView GetView(MvxViewModel viewModel, int index)
         {
-            var viewController = Mvx.Resolve<IMvxIosViewCreator>().CreateView(viewModel) as UIViewController;
-
-            if (viewController == null)
+            if (!(Mvx.Resolve<IMvxIosViewCreator>().CreateView(viewModel) is UIViewController viewController))
             {
                 return null;
             }
@@ -117,11 +113,10 @@ namespace MvvmCross.StackView
 
                 return;
             }
-
-            var newItems = notifyCollectionChangedEventArgs?.NewItems;
-            if (newItems != null)
+            
+            if (notifyCollectionChangedEventArgs.NewItems != null)
             {
-                var newStartingIndex = notifyCollectionChangedEventArgs.NewStartingIndex;
+                int newStartingIndex = notifyCollectionChangedEventArgs.NewStartingIndex;
 
                 foreach (var newItem in notifyCollectionChangedEventArgs.NewItems)
                 {
@@ -129,9 +124,8 @@ namespace MvvmCross.StackView
                     newStartingIndex++;
                 }
             }
-
-            var oldItems = notifyCollectionChangedEventArgs?.OldItems;
-            if (oldItems != null)
+            
+            if (notifyCollectionChangedEventArgs.OldItems != null)
             {
                 foreach (var oldItem in notifyCollectionChangedEventArgs.OldItems)
                 {
@@ -143,7 +137,9 @@ namespace MvvmCross.StackView
         private void InitialiseContainer()
         {
             var index = 0;
-            _viewModelViewLinks.Clear();
+
+            ClearSubviews();
+
             foreach (var viewModel in ItemsSource)
             {
                 AddViewModel(viewModel, index);
@@ -196,6 +192,16 @@ namespace MvvmCross.StackView
 
                 OnAfterRemove(view);
             });
+        }
+
+        private void ClearSubviews()
+        {
+            foreach (var subview in ArrangedSubviews)
+            {
+                RemoveArrangedSubview(subview);
+            }
+
+            _viewModelViewLinks.Clear();
         }
     }
 }
