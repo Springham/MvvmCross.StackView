@@ -199,6 +199,7 @@ namespace MvvmCross.StackView
             foreach (var subview in ArrangedSubviews)
             {
                 RemoveArrangedSubview(subview);
+                subview.RemoveFromSuperview();
             }
 
             _viewModelViewLinks.Clear();
