@@ -11,10 +11,7 @@
     <projectUrl>https://github.com/Springham/MvvmCross.StackView</projectUrl>
     <tags>mvvm mvvmcross xamarin monotouch mvx uistackview stackview mvxstackview</tags>
     <dependencies>
-      <dependency id="MvvmCross" version="4.2.2" />
-      <dependency id="MvvmCross.Binding" version="4.2.2" />
-      <dependency id="MvvmCross.Core" version="4.2.2" />
-      <dependency id="MvvmCross.Platform" version="4.2.2" />
+      <dependency id="MvvmCross" version="6.1.1.0" />
     </dependencies>
   </metadata>
   <files>
