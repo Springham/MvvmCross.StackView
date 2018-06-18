@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using MvvmCross.Binding.Attributes;
-using MvvmCross.Core.ViewModels;
-using MvvmCross.iOS.Views;
-using MvvmCross.Platform;
-using MvvmCross.Platform.WeakSubscription;
+using MvvmCross.Platforms.Ios.Views;
+using MvvmCross.ViewModels;
+using MvvmCross.WeakSubscription;
 using UIKit;
 
 namespace MvvmCross.StackView
